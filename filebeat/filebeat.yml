@@ -4,7 +4,7 @@ filebeat.inputs:
       - /var/logs/voter/voter.log
     fields:
       app_name: "voter"
-    json.keys_under_root: true     # Парсинг логов как JSON
+    json.keys_under_root: true     
     json.add_error_key: true
 
   - type: log
@@ -12,7 +12,7 @@ filebeat.inputs:
       - /var/logs/voter2/voter2.log
     fields:
       app_name: "voter2"
-    json.keys_under_root: true     # Парсинг логов как JSON
+    json.keys_under_root: true     
     json.add_error_key: true
 
 output.logstash:

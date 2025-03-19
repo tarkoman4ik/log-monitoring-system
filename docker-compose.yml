@@ -32,6 +32,7 @@ services:
       - "${KIBANA_PORT}:5601"
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - xpack.encryptedSavedObjects.encryptionKey=my32characterslongencryptionkey123
     healthcheck:
       test:
         [
@@ -57,7 +58,7 @@ services:
     ports:
       - "${LOGSTASH_PORT}:5044"
     environment:
-      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+      LS_JAVA_OPTS: "-Xmx2g -Xms512m"
     depends_on:
       - elasticsearch
 
@@ -73,7 +74,6 @@ services:
       - logstash
     networks:
       - elk
-
 
 networks:
   elk:
