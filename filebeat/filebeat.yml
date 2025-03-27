@@ -1,19 +1,26 @@
 filebeat.inputs:
   - type: log
-    paths:
-      - /var/logs/voter/voter.log
+    paths: ${APP1_PATH_LOGS}
     fields:
-      app_name: "voter"
+      app_name: "${APP1_NAME}"
     json.keys_under_root: true     
     json.add_error_key: true
 
   - type: log
-    paths:
-      - /var/logs/voter2/voter2.log
+    paths: ${APP2_PATH_LOGS}
     fields:
-      app_name: "voter2"
+      app_name: "${APP2_NAME}"
     json.keys_under_root: true     
     json.add_error_key: true
 
+  - type: log
+    paths: ${APP3_PATH_LOGS}
+    fields:
+      app_name: "${APP3_NAME}"
+    json.keys_under_root: true
+    json.add_error_key: true
+
 output.logstash:
-  hosts: ["logstash:5044"]
+  hosts: ["logstash:${LOGSTASH_PORT}"]
+  username: ${ELASTIC_USERNAME}
+  password: ${ELASTIC_PASS}

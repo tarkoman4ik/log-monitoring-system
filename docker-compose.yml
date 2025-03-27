@@ -5,7 +5,9 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     container_name: elasticsearch
     environment:
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${ELASTIC_PASS}
+      - cluster.name=${CLUSTER_NAME}
       - discovery.type=single-node
       - network.host=0.0.0.0
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
@@ -32,7 +34,10 @@ services:
       - "${KIBANA_PORT}:5601"
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - xpack.encryptedSavedObjects.encryptionKey=my32characterslongencryptionkey123
+      - xpack.security.enabled=true
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASS}
+      - xpack.encryptedSavedObjects.encryptionKey=my_super_secret_key_1234567890abcdef
     healthcheck:
       test:
         [
@@ -49,6 +54,7 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    env_file: .env
     container_name: logstash
     volumes:
       - ./logstash/:/logstash_dir
@@ -58,18 +64,29 @@ services:
     ports:
       - "${LOGSTASH_PORT}:5044"
     environment:
-      LS_JAVA_OPTS: "-Xmx2g -Xms512m"
+      - ELASTIC_USER=${ELASTIC_USERNAME}
+      - ELASTIC_PASSWORD=${ELASTIC_PASS}
+      - ELASTIC_HOSTS=http://elasticsearch:9200
+      - "LS_JAVA_OPTS: -Xmx2g -Xms512m"
     depends_on:
       - elasticsearch
 
   filebeat:
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    env_file: .env
     container_name: filebeat
-    command: filebeat -e -strict.perms=false
+    command: filebeat -e -strict.perms=false -c /usr/share/filebeat/filebeat.yml
+    environment:
+      - ELASTIC_USER=${ELASTIC_USERNAME}
+      - ELASTIC_PASSWORD=${ELASTIC_PASS}
+      - ELASTIC_HOSTS=http://elasticsearch:9200
+      - KIBANA_HOSTS=http://kibana:5601
+      - LOSTASH_HOSTS=http://logstash:5044
     volumes:
       - ${FILEBEAT_PATH}:/usr/share/filebeat/filebeat.yml
-      - app-logs:/var/logs/voter
-      - ${PATH_TO_LOGS}:/var/logs/voter2
+      - app1-logs:/var/logs/${APP1_NAME}
+      - app2-logs:/var/logs/${APP3_NAME}
+      - ${PATH_TO_LOGS_HARD_FIRST}:/var/logs/${APP2_NAME}
     depends_on:
       - logstash
     networks:
@@ -82,5 +99,7 @@ networks:
 volumes:
   elastic_data:
     driver: local
-  app-logs:
-    name: ${APP_LOG_NAME}
+  app1-logs:
+    name: ${APP1_VOLUME_NAME}
+  app2-logs:
+    name: ${APP2_VOLUME_NAME}
