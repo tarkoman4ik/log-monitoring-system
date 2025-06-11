@@ -146,7 +146,7 @@ Check that the Docker Engine is running and run the docker-compose command
 
 To test project you can compose 2 project: [voter][voter-url] and [todo][todo-url]
 
-You can find common logging configurations for your Java or Python applications at this links:
+You can find common logging configurations for your Java, Python or C# applications at this links:
 * [Java configuration][java-logging]
 * [Python configuration][python-logging]
 * [C# configuration][C#-logging]   
