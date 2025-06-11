@@ -42,6 +42,7 @@ The system allows you to collect logs of applications running in different langu
 Applications for testing the monitoring system can be found at the following links:
 * [voter][voter-url]
 * [todo][todo-url]
+* [cursovaya][cursovaya-url]
 
 ### :camera: Screenshots
 
@@ -147,7 +148,8 @@ To test project you can compose 2 project: [voter][voter-url] and [todo][todo-ur
 
 You can find common logging configurations for your Java or Python applications at this links:
 * [Java configuration][java-logging]
-* [Python configuration][python-logging]   
+* [Python configuration][python-logging]
+* [C# configuration][C#-logging]   
 
 ### 🧩 Integrations
 
@@ -198,8 +200,10 @@ Project Link: [https://github.com/tarkoman4ik/log-monitoring-system](https://git
 
 <!-- Links -->
 [docker-url]: <https://docs.docker.com/desktop/setup/install/windows-install/>
+[cursovaya-url]: <https://github.com/tarkoman4ik/cursovaya>
 [voter-url]: <https://github.com/tarkoman4ik/voter>
 [todo-url]: <https://github.com/tarkoman4ik/todo>
 [java-logging]: <https://github.com/tarkoman4ik/voter/blob/master/src/main/resources/logback-spring.xml>
 [python-logging]: <https://github.com/tarkoman4ik/todo/blob/master/app/logging_config.py>
 [telegram-url]: <http://t.me/itsssadnesss>
+[C#-logging]: <https://github.com/tarkoman4ik/cursovaya/blob/main/cursovaya/Global.asax.cs>
