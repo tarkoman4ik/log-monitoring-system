@@ -57,7 +57,6 @@ Applications for testing the monitoring system can be found at the following lin
 * 10-20 GB on your disk
 * Availability of [docker][docker-url]
 * Configured .env file
-* Enabled VPN if you from Russia
 
 ### :computer: Tech Stack
 
